@@ -197,35 +197,52 @@ class Clinic: #High-level clinic operations interfacing
 def setup_initial_data(clinic: Clinic): #Sets up initial sample data for testing and demonstration purposes.
     
     # Specialties Data
-    clinic.db.insert_specialty(Specialty("OPT", "Ophthalmology"))
-    clinic.db.insert_specialty(Specialty("CAR", "Cardiology"))
-    clinic.db.insert_specialty(Specialty("GEN", "General Practice"))
-    
-    # Doctors Data    
-    clinic.db.insert_doctor(Doctor(1, "Dr. Ana Ferreira", "555-1111"))
-    clinic.db.insert_doctor(Doctor(2, "Dr. Bruno Costa", "555-2222"))
-    clinic.db.insert_doctor(Doctor(3, "Dr. Sofia Reis", "555-3333"))
-    clinic.db.insert_doctor(Doctor(4, "Dr. Ricardo Nunes", "555-4444"))
-    clinic.db.insert_doctor(Doctor(5, "Dr. Laura Gomes", "555-5555"))
+    specialties_data = [
+        ("OPT", "Ophthalmology"),
+        ("CAR", "Cardiology"),
+        ("GEN", "General Practice"),
+    ]
 
+    for code, name in specialties_data: # Create a Specialty object and insert it into the database
+            clinic.db.insert_specialty(Specialty(code, name))
+      
+    # Doctors Data    
+    doctor_data = [
+        (1, "Dr. Ana Ferreira", "555-1111"),
+        (2, "Dr. Bruno Costa", "555-2222"),
+        (3, "Dr. Sofia Reis", "555-3333"),
+        (4, "Dr. Ricardo Nunes", "555-4444"),
+        (5, "Dr. Laura Gomes", "555-5555"),
+    ]
+
+    for doc_id, name, phone in doctor_data: # Create a Doctor object and insert it into the database
+        clinic.db.insert_doctor(Doctor(doc_id, name, phone))
+   
     # Assign Specialties
-    clinic.db.assign_doctor_specialty(1, "OPT") 
-    clinic.db.assign_doctor_specialty(2, "CAR")
-    clinic.db.assign_doctor_specialty(3, "OPT")
-    clinic.db.assign_doctor_specialty(3, "GEN") # Sofia has two specialties
-    clinic.db.assign_doctor_specialty(4, "GEN")
-    clinic.db.assign_doctor_specialty(5, "OPT") # Total OPT doctors: 1, 3, 5 (Count: 3)
+    specialities_data = [
+        (1, "OPT"),
+        (2, "CAR"),
+        (3, "OPT"),
+        (3, "GEN"), # Sofia has two specialties
+        (4, "GEN"),
+        (5, "OPT") # Total OPT doctors: 1, 3, 5 (Count: 3)
+    ]
+    for doc_id, spec_code in specialities_data: # Assign specialties to doctors
+        clinic.db.assign_doctor_specialty(doc_id, spec_code)
 
     # Patients Data
-    clinic.db.insert_patient(Patient(101, "Joana Silva", "1955-08-15", "555-1234", "10, Street A")) # Senior (~70)
-    clinic.db.insert_patient(Patient(102, "Carlos Mendes", "1990-03-20", "555-5678", "25, Avenue B")) # Not Senior (~35)
-    clinic.db.insert_patient(Patient(103, "Helena Souza", "1945-11-01", "555-9012", "30, Road C")) # Senior (~80)
-    clinic.db.insert_patient(Patient(104, "Pedro Lima", "2000-05-10", "555-3456", "5, Alley D")) # Not Senior (~25)
-    
+    patient_data = [
+        (101, "Joana Silva", "1955-08-15", "555-1234", "10, Street A"),
+        (102, "Carlos Mendes", "1990-03-20", "555-5678", "25, Avenue B"),
+        (103, "Helena Souza", "1945-11-01", "555-9012", "30, Road C"),
+        (104, "Pedro Lima", "2000-05-10", "555-3456", "5, Alley D"),
+    ]   
+    for pat_id, name, dob, phone, address in patient_data: # Create a Patient object and insert it into the database
+        clinic.db.insert_patient(Patient(pat_id, name, dob, phone, address))
 
 def main():
-    clinic_system = Clinic() 
-       
+    clinic_system = Clinic()        
+
     setup_initial_data(clinic_system) # Set up the data
 
     clinic_system.list_senior_patients() # List senior patients
