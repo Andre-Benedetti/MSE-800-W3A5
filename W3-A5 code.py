@@ -194,23 +194,19 @@ class Clinic: #High-level clinic operations interfacing
         self.db.close() #Closes the database connection
 
 
-def setup_initial_data(clinic: Clinic): #Sets up initial data for testing and demonstration purposes.
+def setup_initial_data(clinic: Clinic): #Sets up initial sample data for testing and demonstration purposes.
     
     # Specialties Data
     clinic.db.insert_specialty(Specialty("OPT", "Ophthalmology"))
     clinic.db.insert_specialty(Specialty("CAR", "Cardiology"))
     clinic.db.insert_specialty(Specialty("GEN", "General Practice"))
     
-    # Doctors Data
-    dr_ana = Doctor(1, "Dr. Ana Ferreira", "555-1111")
-    dr_sofia = Doctor(3, "Dr. Sofia Reis", "555-3333")
-    dr_laura = Doctor(5, "Dr. Laura Gomes", "555-5555")
-    
-    clinic.db.insert_doctor(dr_ana)
+    # Doctors Data    
+    clinic.db.insert_doctor(Doctor(1, "Dr. Ana Ferreira", "555-1111"))
     clinic.db.insert_doctor(Doctor(2, "Dr. Bruno Costa", "555-2222"))
-    clinic.db.insert_doctor(dr_sofia)
+    clinic.db.insert_doctor(Doctor(3, "Dr. Sofia Reis", "555-3333"))
     clinic.db.insert_doctor(Doctor(4, "Dr. Ricardo Nunes", "555-4444"))
-    clinic.db.insert_doctor(dr_laura)
+    clinic.db.insert_doctor(Doctor(5, "Dr. Laura Gomes", "555-5555"))
 
     # Assign Specialties
     clinic.db.assign_doctor_specialty(1, "OPT") 
