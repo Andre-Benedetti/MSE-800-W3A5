@@ -15,7 +15,7 @@ class Patient: #Represents a patient in the clinic.
     def is_senior(self, threshold: int = 65) -> bool: #Checks if the patient is considered a senior
         return self.age > threshold
 
-    def get_info_dict(self) -> Dict: #Returns all patient information as a dictionary 1-to-1
+    def get_info_dict(self) -> Dict: #Returns all patient information 
         
         return {
             "ID": self.patient_id,
@@ -26,6 +26,14 @@ class Patient: #Represents a patient in the clinic.
             "Address": self.address
         }
 
+def _calculate_age(dob_str: str) -> int: # Utility function for age calculation based on DOB
+    try:
+        birth_year = int(dob_str.split('-')[0])
+        current_year = date.today().year
+        return current_year - birth_year
+    except:
+        return 0 
+    
 class Specialty: #medical specialty with a unique code
     
     def __init__(self, code: str, name: str):
@@ -147,14 +155,6 @@ class ClinicDatabase:#Manages database connections and CRUD operations.
         if self.conn:
             self.conn.close()
 
-def _calculate_age(dob_str: str) -> int: # Function for age calculation based on DOB
-    try:
-        birth_year = int(dob_str.split('-')[0])
-        current_year = date.today().year
-        return current_year - birth_year
-    except:
-        return 0 
-    
 class Clinic: #High-level clinic operations interfacing
     
     def __init__(self):
